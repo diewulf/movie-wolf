@@ -1,7 +1,6 @@
 'use client';
 import Link from 'next/link'; // Componente de Next.js para navegación
 import Image from 'next/image'; // Componente de Next.js para optimización de imágenes
-import SearchInput from './components/search';
 import Header from './components/layout/header';
 
 // Datos de ejemplo para las películas
