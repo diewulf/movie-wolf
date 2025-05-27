@@ -5,13 +5,7 @@ import Image from 'next/image';
 import { LogOut } from 'lucide-react';
 
 import { useRouter } from 'next/navigation';
-
-const mockMovies = [
-  { id: 1, title: 'El Padrino', filePath: '/films/padrino.mp4' },
-  { id: 2, title: 'La Matrix', filePath: '/films/matrix.mp4' },
-  { id: 3, title: 'Interestelar', filePath: '/films/interestelar.mp4' },
-  { id: 4, title: 'Wolf Cinema', filePath: '/films/wolf.mp4' },
-];
+import { MOVIES } from '@/app/dashboard/movie-list';
 
 const Header = () => {
   const router = useRouter();
@@ -26,7 +20,7 @@ const Header = () => {
           <Image src="/logo.png" alt="Logo" width={120} height={42} />
         </Link>
         <div className="relative flex-1">
-          <SearchInput movies={mockMovies} />
+          <SearchInput movies={MOVIES} />
         </div>
         <button
           onClick={handleLogout}

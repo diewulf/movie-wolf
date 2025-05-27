@@ -4,40 +4,9 @@ import VideoPlayer from '@/components/ui/Video';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+import { MOVIES } from '../../movie-list';
 
 // Datos de ejemplo para las películas
-const movies = [
-  {
-    id: '1',
-    title: 'Inception',
-    image: '/placeholder.svg?height=400&width=300',
-  },
-  {
-    id: '2',
-    title: 'The Dark Knight',
-    image: '/placeholder.svg?height=400&width=300',
-  },
-  {
-    id: '3',
-    title: 'Interstellar',
-    image: '/placeholder.svg?height=400&width=300',
-  },
-  {
-    id: '4',
-    title: 'Pulp Fiction',
-    image: '/placeholder.svg?height=400&width=300',
-  },
-  {
-    id: '5',
-    title: 'The Godfather',
-    image: '/placeholder.svg?height=400&width=300',
-  },
-  {
-    id: '6',
-    title: 'Fight Club',
-    image: '/placeholder.svg?height=400&width=300',
-  },
-];
 
 interface Props {
   movieId: string;
@@ -45,7 +14,7 @@ interface Props {
 
 export function VideoContainer({ movieId }: Props) {
   // Buscar la filmer por ID
-  const movie = movies.find((movie) => movie.id === movieId);
+  const movie = MOVIES.find((movie) => movie.id === movieId);
 
   return (
     <>
@@ -59,11 +28,11 @@ export function VideoContainer({ movieId }: Props) {
 
       <div className="aspect-video w-full bg-black rounded-lg overflow-hidden mb-6">
         <VideoPlayer
-          videoSrc="/films/dark-city.mp4"
-          poster="/films/dark-city.webp"
+          videoSrc={movie.path}
+          poster={movie.image}
           tracks={[
             {
-              src: '/films/dark-city.vtt',
+              src: movie.vtt,
               label: 'Español',
               lang: 'es',
               default: true,

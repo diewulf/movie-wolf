@@ -3,10 +3,12 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 
-interface Movie {
-  id: number;
+export interface Movie {
+  id: string;
   title: string;
-  filePath: string;
+  image: string;
+  path: string;
+  vtt: string;
 }
 
 interface Props {
