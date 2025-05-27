@@ -18,7 +18,7 @@ export const MOVIES = [
     title: 'Dune 2000 S1 E1',
     image: '/films/dune-2000/dune-2000.jpeg',
     path: '/films/dune-2000/dune-2000-S1-E1.mp4',
-    vtt: '/films/dune-2000/Dune__2000__Parte_1.srt',
+    vtt: '/films/dune-2000/Dune__2000__Parte_1.vtt',
   },
 ];
 
