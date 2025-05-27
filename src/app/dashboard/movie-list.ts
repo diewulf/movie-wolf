@@ -20,6 +20,20 @@ export const MOVIES = [
     path: '/films/dune-2000/dune-2000-S1-E1.mp4',
     vtt: '/films/dune-2000/Dune__2000__Parte_1.vtt',
   },
+  {
+    id: '4',
+    title: 'Dune 2000 S1 E2',
+    image: '/films/dune-2000/dune-2000.jpeg',
+    path: '/films/dune-2000/dune-2000-S1-E2.mp4',
+    vtt: '/films/dune-2000/dune.part02.vtt',
+  },
+  {
+    id: '5',
+    title: 'Dune 2000 S1 E3',
+    image: '/films/dune-2000/dune-2000.jpeg',
+    path: '/films/dune-2000/dune-2000-S1-E3.mp4',
+    vtt: '/films/dune-2000/dune.part03.vtt',
+  },
 ];
 
 // /public/films/gandahar/gandahar.srt ./public/films/gandahar
