@@ -13,7 +13,7 @@ export async function POST(request: Request) {
   if (username === VALID_USER.username && password === VALID_USER.password) {
     const token = await signToken({ username });
 
-    (await cookies()).set('session', token, {
+    (await cookies()).set('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       path: '/',
