@@ -1,7 +1,7 @@
-import { writeFile } from 'fs/promises';
+import { NextRequest, NextResponse } from 'next/server';
+import fs from 'fs';
 import path from 'path';
 import { mkdirSync, existsSync } from 'fs';
-import { NextResponse } from 'next/server';
 
 export const config = {
   api: {
@@ -9,21 +9,21 @@ export const config = {
   },
 };
 
-// Limpia el nombre para usarlo como carpeta/archivo
 function sanitizeName(name: string) {
   return name
-    .normalize('NFD') // elimina tildes
-    .replace(/[\u0300-\u036f]/g, '') // marcas diacríticas
-    .replace(/['"“”‘’]/g, '') // comillas
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/['"“”‘’]/g, '')
     .toLowerCase()
-    .replace(/\s+/g, '-') // espacios → guiones
-    .replace(/[^a-z0-9\-]/g, '') // solo letras/números/guiones
-    .replace(/\-+/g, '-') // colapsa guiones
-    .replace(/^-+|-+$/g, ''); // remueve guiones extremos
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9\-]/g, '')
+    .replace(/\-+/g, '-')
+    .replace(/^-+|-+$/g, '');
 }
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   const formData = await req.formData();
+
   const file = formData.get('file') as File;
   const rawName = formData.get('name') as string;
 
@@ -32,23 +32,23 @@ export async function POST(req: Request) {
   }
 
   const sanitized = sanitizeName(rawName);
+
   const fileBuffer = Buffer.from(await file.arrayBuffer());
+  const ext = path.extname(file.name) || '.bin'; // ✅ usa extensión original
 
-  // Ruta base: public/films/[nombre-pelicula]
-  const movieDir = path.join(process.cwd(), 'public', 'films', sanitized);
-  if (!existsSync(movieDir)) mkdirSync(movieDir, { recursive: true });
+  const baseDir = path.join(process.cwd(), 'public', 'films', sanitized);
+  if (!existsSync(baseDir)) mkdirSync(baseDir, { recursive: true });
 
-  const ext = file.name.split('.').pop() || 'bin';
-  const filename = `${sanitized}.${ext}`;
-  const filePath = path.join(movieDir, filename);
+  const finalFilename = `${sanitized}${ext}`;
+  const filePath = path.join(baseDir, finalFilename);
 
-  await writeFile(filePath, fileBuffer);
+  await fs.promises.writeFile(filePath, fileBuffer);
 
-  const publicPath = `/films/${sanitized}/${filename}`;
+  const publicUrl = `/films/${sanitized}/${finalFilename}`;
 
   return NextResponse.json({
     success: true,
-    filename,
-    path: publicPath,
+    filename: finalFilename,
+    path: publicUrl,
   });
 }
