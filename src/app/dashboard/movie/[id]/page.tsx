@@ -1,4 +1,4 @@
-import { VideoContainer } from './container';
+import { VideoContainer } from './VideoContainer';
 
 interface Props {
   params: Promise<{

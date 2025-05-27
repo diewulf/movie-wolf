@@ -46,7 +46,7 @@ export default function SearchInput({ movies }: Props) {
   };
 
   return (
-    <div className="w-full max-w-md relative">
+    <div className="w-full  relative">
       <div ref={wrapperRef}>
         <input
           type="text"

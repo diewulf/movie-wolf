@@ -1,6 +1,6 @@
 'use client';
 
-import VideoPlayer from '@/components/ui/video';
+import VideoPlayer from '@/components/ui/Video';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
@@ -50,7 +50,7 @@ export function VideoContainer({ movieId }: Props) {
   return (
     <>
       <div className="mb-4">
-        <Link href="/" className="text-primary hover:underline">
+        <Link href="/dashboard" className="text-primary hover:underline">
           ← Volver a películas
         </Link>
       </div>
