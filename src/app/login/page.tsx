@@ -2,33 +2,21 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-
+import useAuth from '@/hooks/useAuth';
 export default function LoginPage() {
-  const router = useRouter();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const { login, error, setError, loading } = useAuth();
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    const res = await fetch('/api/auth/login', {
-      method: 'POST',
-      body: JSON.stringify({ username, password }),
-    });
-
-    if (res.ok) {
-      router.push('/dashboard');
-    } else {
-      setError('Credenciales inválidas');
-    }
+    login({ username, password });
   };
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-background px-4">
       <form
-        onSubmit={handleLogin}
+        onSubmit={handleSubmit}
         className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm space-y-4"
       >
         <h1 className="text-2xl font-bold text-black">Iniciar sesión</h1>
@@ -37,7 +25,10 @@ export default function LoginPage() {
           type="text"
           placeholder="Usuario"
           value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(e) => {
+            setUsername(e.target.value);
+            if (error) setError(null);
+          }}
           className="w-full px-4 py-2 border text-black placeholder-gray-300 border-gray-600 rounded-md"
         />
 
@@ -45,17 +36,21 @@ export default function LoginPage() {
           type="password"
           placeholder="Contraseña"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-full px-4 py-2 border  text-black placeholder-gray-300 border-gray-600 rounded-md"
+          onChange={(e) => {
+            setPassword(e.target.value);
+            if (error) setError(null);
+          }}
+          className="w-full px-4 py-2 border text-black placeholder-gray-300 border-gray-600 rounded-md"
         />
 
         {error && <p className="text-red-600 text-sm">{error}</p>}
 
         <button
           type="submit"
-          className="w-full bg-black text-white py-2 rounded-md hover:bg-gray-800"
+          disabled={loading}
+          className="w-full bg-black text-white py-2 rounded-md hover:bg-gray-800 disabled:opacity-50"
         >
-          Entrar
+          {loading ? 'Entrando...' : 'Entrar'}
         </button>
       </form>
     </main>

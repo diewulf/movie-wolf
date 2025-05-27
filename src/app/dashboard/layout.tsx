@@ -1,6 +1,8 @@
 import type React from 'react';
 import './../globals.css';
 import Header from '@/components/layout/header';
+import SearchInput from '@/components/search';
+import { MOVIES } from './movie-list';
 
 export default function RootLayout({
   children,
@@ -9,7 +11,9 @@ export default function RootLayout({
 }>) {
   return (
     <>
-      <Header />
+      <Header>
+        <SearchInput movies={MOVIES} />
+      </Header>
       <div className="flex-1 container mx-auto px-4 py-6">{children}</div>
     </>
   );
