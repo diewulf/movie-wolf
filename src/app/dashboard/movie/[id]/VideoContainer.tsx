@@ -26,7 +26,7 @@ export function VideoContainer({ movieId }: Props) {
 
       <h1 className="text-2xl font-bold mb-4">{movie?.title}</h1>
 
-      <div className="aspect-video w-full bg-black rounded-lg overflow-hidden mb-6">
+      <div className="w-full bg-black rounded-lg  mb-6">
         <VideoPlayer
           videoSrc={movie.path}
           poster={movie.image}
