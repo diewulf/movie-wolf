@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { verifyToken } from '@/service/auth';
 
 export async function middleware(req: NextRequest) {
-  const token = req.cookies.get('session')?.value;
+  const token = req.cookies.get('token')?.value;
   const payload = token ? await verifyToken(token) : null;
 
   const isLoggedIn = Boolean(payload);
