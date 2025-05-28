@@ -34,6 +34,17 @@ export const MOVIES = [
     path: '/films/dune-2000/dune-2000-S1-E3.mp4',
     vtt: '/films/dune-2000/dune.part03.vtt',
   },
+  {
+    id: '6',
+    title: 'Chronopolis 1982',
+    image: '/films/chronopolis/chronopolis.jpeg',
+    path: '/films/chronopolis/Chronopolis__1982_.mp4',
+  },
+  {
+    id: '7',
+    title: 'Hackers  1995',
+    image: '/films/hacker-1995/hacker-1995.webp',
+    path: '/films/hacker-1995/Hackers.1995.mp4',
+    vtt: '/films/hacker-1995/hacker-1995.vtt',
+  },
 ];
-
-// /public/films/gandahar/gandahar.srt ./public/films/gandahar

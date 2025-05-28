@@ -3,37 +3,8 @@ import { writeFile, mkdir, unlink, readFile } from 'fs/promises';
 import { createWriteStream, existsSync, statSync } from 'fs';
 import path from 'path';
 
-const BASE_UPLOAD_DIR = path.join(process.cwd(), 'public/films');
-
-// Sanitizar nombre de película
-function sanitizeMovieName(name: string): string {
-  return name
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9\s-]/g, '') // Remover caracteres especiales excepto espacios y guiones
-    .replace(/\s+/g, '-') // Reemplazar espacios con guiones
-    .replace(/-+/g, '-') // Reemplazar múltiples guiones con uno solo
-    .replace(/^-|-$/g, ''); // Remover guiones al inicio y final
-}
-
-// Asegurar que los directorios existen
-async function ensureDirectories(movieName: string) {
-  const sanitizedMovieName = sanitizeMovieName(movieName);
-  const movieDir = path.join(BASE_UPLOAD_DIR, sanitizedMovieName);
-  const tempDir = path.join(movieDir, 'temp');
-
-  if (!existsSync(BASE_UPLOAD_DIR)) {
-    await mkdir(BASE_UPLOAD_DIR, { recursive: true });
-  }
-  if (!existsSync(movieDir)) {
-    await mkdir(movieDir, { recursive: true });
-  }
-  if (!existsSync(tempDir)) {
-    await mkdir(tempDir, { recursive: true });
-  }
-
-  return { movieDir, tempDir };
-}
+const FILM_DIR = 'public/films';
+const BASE_UPLOAD_DIR = path.join(process.cwd(), FILM_DIR);
 
 export async function POST(request: NextRequest) {
   try {
@@ -167,7 +138,7 @@ export async function POST(request: NextRequest) {
           fileName: safeFileName,
           movieName: sanitizeMovieName(movieName),
           size: finalStats.size,
-          path: `public/films/${sanitizeMovieName(movieName)}/${safeFileName}`,
+          path: `${FILM_DIR}/${sanitizeMovieName(movieName)}/${safeFileName}`,
         });
       } catch (error) {
         console.log('Error ensamblando archivo:', error);
@@ -221,4 +192,34 @@ export async function POST(request: NextRequest) {
     console.log('Error en API upload:', error.message);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
+}
+
+// Sanitizar nombre de película
+function sanitizeMovieName(name: string): string {
+  return name
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, '') // Remover caracteres especiales excepto espacios y guiones
+    .replace(/\s+/g, '-') // Reemplazar espacios con guiones
+    .replace(/-+/g, '-') // Reemplazar múltiples guiones con uno solo
+    .replace(/^-|-$/g, ''); // Remover guiones al inicio y final
+}
+
+// Asegurar que los directorios existen
+async function ensureDirectories(movieName: string) {
+  const sanitizedMovieName = sanitizeMovieName(movieName);
+  const movieDir = path.join(BASE_UPLOAD_DIR, sanitizedMovieName);
+  const tempDir = path.join(movieDir, 'temp');
+
+  if (!existsSync(BASE_UPLOAD_DIR)) {
+    await mkdir(BASE_UPLOAD_DIR, { recursive: true });
+  }
+  if (!existsSync(movieDir)) {
+    await mkdir(movieDir, { recursive: true });
+  }
+  if (!existsSync(tempDir)) {
+    await mkdir(tempDir, { recursive: true });
+  }
+
+  return { movieDir, tempDir };
 }

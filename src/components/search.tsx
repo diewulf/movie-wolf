@@ -63,7 +63,7 @@ export default function SearchInput({ movies }: Props) {
             {results.map((movie) => (
               <li key={movie.id}>
                 <Link
-                  href={`/movie/${movie.id}`}
+                  href={`/dashboard/movie/${movie.id}`}
                   className="block hover:bg-white px-4 py-2 hover:bg-muted hover:text-background rounded-xl transition-colors"
                 >
                   {movie.title}
